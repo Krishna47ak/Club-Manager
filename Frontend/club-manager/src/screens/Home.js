@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import '../../src/components/Main.css';
 
-const Home = () => {
+import HeroSection from '../components/Home/HeroSection.js';
+import Cards from '../components/Cards/Cards'
+
+function Home() {
   return (
-    <div className='bg-blue-400 flex justify-center items-center' >Hi i am Ananda</div>
-  )
+    <>
+      <HeroSection />
+      <Cards/>
+    </>
+  );
 }
 
-export default Home
+export default Home;
