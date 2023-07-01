@@ -1,7 +1,8 @@
 import "./App.css";
 
-import Home from "./screens/Home";
 import Navbar from "./components/Navbar/Navbar.js";
+import Home from "./screens/Home";
+import SignIn from "./screens/SignIn.js";
 import Footer from "./components/Footer/footer.js";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -15,6 +16,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/sign-in" element={<SignIn />} />
         </Routes>
         <Footer/>
       </Router>
