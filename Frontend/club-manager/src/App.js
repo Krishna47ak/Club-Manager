@@ -3,7 +3,7 @@ import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar.js";
 import Home from "./screens/Home";
-import Seacrh from './screens/Search'
+import Search from './screens/Search'
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/Signup.js";
 import Studentprofile from './screens/Studentprofile';
@@ -26,7 +26,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/search" element={<Seacrh />} />
+          <Route exact path="/search" element={<Search />} />
           <Route exact path="/sign-in" element={<SignIn />} />
           <Route exact path="/profile" element={<Studentprofile/>} />
           <Route exact path="/clubprofile" element={<ClubProfile/>} />
