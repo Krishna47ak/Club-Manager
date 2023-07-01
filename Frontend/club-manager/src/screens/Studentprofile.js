@@ -1,6 +1,14 @@
 import React from "react";
 import simg from "../assets/images/img-7.jpg"; //for image
-function Studentprofile() {
+import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+
+function Studentprofile({ isAuthenticated }) {
+
+  if (!isAuthenticated) {
+    return <Navigate to="/sign-in" />
+  }
+
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left Section */}
@@ -47,11 +55,11 @@ function Studentprofile() {
                 <p>Male</p>
               </div>
             </div>
-          <div className="flex justify-end mt-[200px]">
-            <button className="bg-black text-white w-[30%] h-[40px] rounded-md p-2">
-              Search Clubs
-            </button>
-          </div>
+            <div className="flex justify-end mt-[200px]">
+              <button className="bg-black text-white w-[30%] h-[40px] rounded-md p-2">
+                Search Clubs
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -59,4 +67,9 @@ function Studentprofile() {
   );
 }
 
-export default Studentprofile;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+
+export default connect(mapStateToProps)(Studentprofile)

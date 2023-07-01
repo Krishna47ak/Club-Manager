@@ -1,5 +1,5 @@
 import clubApi from '../../api/clubApi'
-import { AUTH_ERROR, FETCH_USER, LOGIN_SUCCESS } from '../types'
+import { AUTH_ERROR, FETCH_USER, LOGIN_SUCCESS, SIGN_OUT } from '../types'
 
 
 export const fetchUser = () => async dispatch => {
@@ -20,6 +20,9 @@ export const fetchUser = () => async dispatch => {
         console.log(errors);
     }
 }
+export const signout = () => async dispatch => {
+    dispatch({ type: SIGN_OUT })
+}
 
 export const login = (email, password, history) => async dispatch => {
     const config = {
@@ -31,11 +34,11 @@ export const login = (email, password, history) => async dispatch => {
     const body = JSON.stringify({ email, password })
     try {
         const response = await clubApi.post('/api/auth/signin', body, config)
-        localStorage.setItem('token', response.data)
+        localStorage.setItem('token', response?.data)
         dispatch({ type: LOGIN_SUCCESS, payload: response?.data })
         history('/profile')
     } catch (err) {
-        const errors = err.response.data.error
+        const errors = err?.response?.data?.error
         console.log(errors);
     }
 }
@@ -50,11 +53,11 @@ export const signup = (name, email, mobile, gender, role, usn, collegename, pass
     const body = JSON.stringify({ name, email, mobile, gender, role, usn, collegename, password })
     try {
         const response = await clubApi.post('/api/auth/signup', body, config)
-        localStorage.setItem('token', response.data)
+        localStorage.setItem('token', response?.data)
         dispatch({ type: LOGIN_SUCCESS, payload: response?.data })
         history('/profile')
     } catch (err) {
-        const errors = err.response.data.errors
+        const errors = err?.response?.data?.errors
         console.log(err);
     }
 }

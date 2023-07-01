@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { signout } from '../../store/actions/auth'
 
 import Button from '../common/Button'
 import './Navbar.css'
 
 
-function Navbar({ isAuthenticated }) {
+function Navbar({ isAuthenticated, signout }) {
     const [click, setClick] = useState(false)
 
     const handleClick = () => setClick(!click);
@@ -39,9 +40,9 @@ function Navbar({ isAuthenticated }) {
                         <li className='nav-item'><Link to="/search" className='nav-links' onClick={closeMobileMenu}>Seacrh</Link></li>
                         <li className='nav-item'><Link to="/clubprofile" className='nav-links' onClick={closeMobileMenu}>Club Profile</Link></li>
                         <li className='nav-item'><Link to="/profile" className='nav-links' onClick={closeMobileMenu}>Student Profile</Link></li>
-                        { !isAuthenticated && <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>}
+                        {!isAuthenticated && <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>}
                     </ul>
-                    {button && <Button isAuthenticated={isAuthenticated} buttonStyle="btn--outline">{ isAuthenticated ? 'Sign Out' : 'Sign Up'}</Button>}
+                    {button && <Button isAuthenticated={isAuthenticated} onClick={isAuthenticated && signout} buttonStyle="btn--outline">{isAuthenticated ? 'Sign Out' : 'Sign Up'}</Button>}
                 </div>
             </nav >
         </>
@@ -52,4 +53,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, { signout })(Navbar)
