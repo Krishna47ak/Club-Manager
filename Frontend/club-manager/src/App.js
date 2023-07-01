@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./App.css";
 
 import Navbar from "./components/Navbar/Navbar.js";
@@ -9,8 +10,13 @@ import Footer from "./components/Footer/footer.js";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { fetchUser } from "./store/actions/auth";
 
 function App() {
+  useEffect(() => {
+    store.dispatch(fetchUser())
+  }, [])
+
   return (
     <Provider store={store}>
       <Router>
@@ -20,7 +26,7 @@ function App() {
           <Route exact path="/sign-in" element={<SignIn />} />
           <Route exact path="/sign-up" element={<SignUp />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </Router>
     </Provider>
   );

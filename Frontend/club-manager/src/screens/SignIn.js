@@ -1,7 +1,12 @@
 import React, { Fragment, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { connect } from 'react-redux'
 
-const SignUp = () => {
+import { login } from "../store/actions/auth";
+
+const SignIn = ({ isAuthenticated, login }) => {
+  const history = useNavigate()
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,15 +16,17 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
     e.preventDefault();
+    login(email, password, history)
     console.log("logged");
   };
-  const bgStyle={
-    backgroundColor:"#004f58"
+
+  if (isAuthenticated) {
+    return <Navigate to="/profile" />
   }
 
   return (
     <Fragment>
-      <section className="flex flex-col justify-center items-center space-y-10 p-10 h- " style={bgStyle}>
+      <section className="flex flex-col justify-center items-center space-y-10 p-10 h- " style={{ backgroundColor: "#004f58" }}>
         <h1 className="text-white text-3xl mt-14 ">Login</h1>
         <p className="text-white text-xl ">
           <i className="fas fa-user"></i> Sign In to Your Account
@@ -27,7 +34,7 @@ const SignUp = () => {
         <form className="flex flex-col " onSubmit={onSubmit}>
           <div className="mb-6">
             <input
-              className="pr-28 pl-5 py-2 rounded-2xl"
+              className="w-80 pr-5 pl-5 py-2 rounded-2xl"
               value={email}
               onChange={onChange}
               type="email"
@@ -38,7 +45,7 @@ const SignUp = () => {
           </div>
           <div className="mb-10">
             <input
-              className="pr-28 pl-5 py-2 rounded-2xl"
+              className="w-80 pr-5 pl-5 py-2 rounded-2xl"
               value={password}
               onChange={onChange}
               type="password"
@@ -49,12 +56,16 @@ const SignUp = () => {
           </div>
           <input type="submit" className="btn btn-primary " value="Login" />
         </form>
-        <a className="text-white cursor-pointer pb-36 ">
-          Don't have an account? <Link to="/sign-up">Sign Up</Link>
-        </a>
+        <p className="text-white cursor-pointer pb-36 ">
+          Don't have an account? <Link className='text-blue-400' to="/sign-up">Sign Up</Link>
+        </p>
       </section>
     </Fragment>
   );
 };
 
-export default SignUp;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { login })(SignIn)
