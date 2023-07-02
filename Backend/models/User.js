@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    img: {
+        type: String
+    },
     gender: {
         type: String,
         required: true
