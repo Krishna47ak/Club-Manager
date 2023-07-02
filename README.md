@@ -34,3 +34,4 @@ Welcome to ClubManager, a web application designed to help students find and exp
 ![login](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/9767152a-214f-4118-9d09-03c6bb327260)
 ![signup](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/9172d07b-b861-4189-99e3-21a5bcd4107e)
 ![profile](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/4e6fffaf-a8dc-4828-93f8-fd589fb33cc8)
+![club](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/4b07e497-7640-4440-af38-0376108816ca)
