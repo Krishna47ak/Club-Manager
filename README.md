@@ -1,3 +1,5 @@
+# Track 1 – Full Stack Web Application
+
 # Team-Frost-Club-Manager
 
 # ClubManager Web App
@@ -26,3 +28,9 @@ Welcome to ClubManager, a web application designed to help students find and exp
 ## Architecture Diagram:
 ![Flow](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/60bb8061-ff9f-4170-9f29-3fe9904d4e21)
 
+## Screenshots:
+![Home](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/b52e9a24-66a1-4db4-bf05-b64e901f474c)
+![Club Activities](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/22bff968-8d5d-4222-843b-8528cb685b16)
+![login](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/9767152a-214f-4118-9d09-03c6bb327260)
+![signup](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/9172d07b-b861-4189-99e3-21a5bcd4107e)
+![profile](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/4e6fffaf-a8dc-4828-93f8-fd589fb33cc8)
