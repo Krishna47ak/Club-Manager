@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'https://b6c5-42-105-126-123.ngrok-free.app'
+    baseURL: 'https://club-manager-1s0e.onrender.com'
 })
 
 export default instance;
