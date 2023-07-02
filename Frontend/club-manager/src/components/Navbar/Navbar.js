@@ -7,7 +7,7 @@ import Button from '../common/Button'
 import './Navbar.css'
 
 
-function Navbar({ isAuthenticated, signout }) { 
+function Navbar({ isAuthenticated, signout, user }) {
     const [click, setClick] = useState(false)
 
     const handleClick = () => setClick(!click);
@@ -28,35 +28,37 @@ function Navbar({ isAuthenticated, signout }) {
     window.addEventListener('resize', showButton)
     return (
         <>
-                <nav className='navbar'>
-                    <div className='navbar-container'>
-                        <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>ClubManager <i className="fab fa-typo3"></i></Link>
-                        <div className='menu-icon' onClick={handleClick}>
-                            <i className={click ? "fas fa-times" : "fas fa-bars"} />
-                        </div>
-                        <ul className={click ? "nav-menu active" : "nav-menu"}>
-
-                            <li className='nav-item'><Link to="/" className='nav-links' onClick={closeMobileMenu}>Home</Link></li>
-                            <li className='nav-item'><Link to="/search" className='nav-links' onClick={closeMobileMenu}>Search</Link></li>
-                            {!isAuthenticated ? (
-                                <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>
-                            ) : (
-                                <>
-                                    <li className='nav-item'><Link to="/clubprofile" className='nav-links' onClick={closeMobileMenu}>Club</Link></li>
-                                    <li className='nav-item'><Link to="/profile" className='nav-links' onClick={closeMobileMenu}>Student</Link></li>
-                                    <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>
-                                </>
-                            )}
-                        </ul>
-                        {button && <Button isAuthenticated={isAuthenticated} onClick={isAuthenticated && signout} buttonStyle="btn--outline">{isAuthenticated ? 'Sign Out' : 'Sign Up'}</Button>}
+            <nav className='navbar'>
+                <div className='navbar-container'>
+                    <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>ClubManager <i className="fab fa-typo3"></i></Link>
+                    <div className='menu-icon' onClick={handleClick}>
+                        <i className={click ? "fas fa-times" : "fas fa-bars"} />
                     </div>
-                </nav >
+                    <ul className={click ? "nav-menu active" : "nav-menu"}>
+
+                        <li className='nav-item'><Link to="/" className='nav-links' onClick={closeMobileMenu}>Home</Link></li>
+                        <li className='nav-item'><Link to="/search" className='nav-links' onClick={closeMobileMenu}>Search</Link></li>
+                        {!isAuthenticated ? (
+                            <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>
+                        ) : (
+                            <>
+                                {user?.role == 'admin' && (
+                                    <li className='nav-item'><Link to="/club-profile" className='nav-links' onClick={closeMobileMenu}>Club</Link></li>
+                                )}
+                                <li className='nav-item'><Link to="/profile" className='nav-links' onClick={closeMobileMenu}>Profile</Link></li>
+                            </>
+                        )}
+                    </ul>
+                    {button && <Button isAuthenticated={isAuthenticated} onClick={isAuthenticated && signout} buttonStyle="btn--outline">{isAuthenticated ? 'Sign Out' : 'Sign Up'}</Button>}
+                </div>
+            </nav >
         </>
     )
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { signout })(Navbar)
