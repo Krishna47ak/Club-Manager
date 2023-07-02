@@ -17,7 +17,13 @@ router.post('/', auth, [
     }
 
     try {
-        const user = await User.findById(req.user.id).select('-password')
+        const user = req.user.id
+        let admin = await Club.findOne({ user })
+        console.log(admin);
+
+        if (admin) {
+            return res.status(400).json({ errors: [{ msg: 'User already has a club' }] })
+        }
 
         const interests = req.body.interests.split(',').map(interest => interest.trim())
 
