@@ -1,7 +1,15 @@
-import React from 'react'
-import{Link} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getClub } from '../store/actions/club'
+
 import car_club from '../assets/images/car-club.jpg'
-function ClubProfile() {
+
+function ClubProfile({ club, user, getClub }) {
+  useEffect(() => {
+    getClub(user?._id)
+  }, [])
+
   return (
     <div className="container mx-auto px-4 h-screen">
       <div className="flex flex-col md:flex-row">
@@ -12,13 +20,13 @@ function ClubProfile() {
           </div>
           <div className="mb-4">
             {/* Club Name */}
-            <h1 className="text-2xl font-bold">Club Name</h1>
+            <h1 className="text-2xl font-bold">{club?.name}</h1>
             {/* Club Description */}
-            <p className="text-gray-600">Brief overview of the club...</p>
+            <p className="text-gray-600">{club?.description}</p>
           </div>
           <div className="mb-4">
             {/* College Name */}
-            <p className="text-gray-600">College Name</p>
+            <p className="text-gray-600">{club?.collegename}</p>
           </div>
           <div className="mb-4">
             {/* Club Contact Information */}
@@ -34,10 +42,10 @@ function ClubProfile() {
             {/* Club Officers */}
             <h2 className="text-xl font-bold mb-2">Club Officers</h2>
             <ul className="list-disc pl-6">
-              <li>President: </li>
-              <li>Vice President: </li>
-              <li>Secretary: </li>
-              <li>Treasurer: </li>
+              <li>President: {club?.president}</li>
+              <li>Vice President: {club?.vicepresident}</li>
+              <li>Secretary: {club?.secretary}</li>
+              <li>Treasurer: {club?.treasurer}</li>
             </ul>
           </div>
           <div className="mb-4">
@@ -74,7 +82,7 @@ function ClubProfile() {
           </div>
           <div className='mt-[100px]'>
             <Link to='/eclub-profile'>
-            <button className='bg-black text-white w-[25%] h-[50px] rounded-lg '>Edit</button>
+              <button className='bg-black text-white w-[25%] h-[50px] rounded-lg '>Edit</button>
             </Link>
           </div>
         </div>
@@ -83,4 +91,9 @@ function ClubProfile() {
   )
 }
 
-export default ClubProfile
+const mapStateToProps = state => ({
+  club: state.club.club,
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps, { getClub })(ClubProfile)

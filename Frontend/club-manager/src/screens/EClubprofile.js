@@ -1,7 +1,17 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
-import car_club from "../assets/images/car-club.jpg";
-function Clubprofile() {
+import { Link } from 'react-router-dom'
+import { connect } from "react-redux";
+
+
+function Clubprofile({ club }) {
+  const [name, setName] = useState(club?.name)
+  const [description, setDescription] = useState(club?.description)
+  const [collegename, setCollegeName] = useState(club?.collegename)
+  const [president, setPresident] = useState(club?.president)
+  const [vicepresident, setVicePresident] = useState(club?.vicepresident)
+  const [secretary, setSecretary] = useState(club?.secretary)
+  const [treasurer, setTreasurer] = useState(club?.treasurer)
+
   const [selectedImage, setSelectedImage] = useState(null);
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -27,10 +37,12 @@ function Clubprofile() {
             <div className="mb-4">
               {/* Club Name */}
               <span className="border border-black p-1 flex ">
-                <input type="text" placeholder="Club Name" className="w-full" />
+                <input value={name} onChange={e => setName(e.target.value)} type="text" placeholder="Club Name" className="w-full" />
               </span>
               {/* Club Description */}
               <textarea
+                value={description}
+                onChange={e => setDescription(e.target.value)}
                 className="mt-2 w-[100%] h-[100px] border border-black"
                 placeholder="Club description..."
               ></textarea>
@@ -38,6 +50,8 @@ function Clubprofile() {
             <div className="mb-4">
               {/* College Name */}
               <input
+                value={collegename}
+                onChange={e => setCollegeName(e.target.value)}
                 placeholder="College name"
                 className="border border-black w-full"
               />
@@ -59,8 +73,10 @@ function Clubprofile() {
                   President:
                   <span>
                     <input
+                      value={president}
                       className="border border-black w-[80%]"
                       placeholder="President name.."
+                      onChange={e => setPresident(e.target.value)}
                     />
                   </span>{" "}
                 </li>
@@ -68,8 +84,10 @@ function Clubprofile() {
                   Vice President:
                   <span>
                     <input
+                      value={vicepresident}
                       className="border border-black w-[80%]"
                       placeholder="Vice President name.."
+                      onChange={e => setVicePresident(e.target.value)}
                     />
                   </span>{" "}
                 </li>
@@ -77,8 +95,21 @@ function Clubprofile() {
                   Secretary:
                   <span>
                     <input
+                      value={secretary}
                       className="border border-black w-[80%]"
                       placeholder="Secretary name.."
+                      onChange={e => setSecretary(e.target.value)}
+                    />
+                  </span>{" "}
+                </li>
+                <li>
+                  Treasurer:
+                  <span>
+                    <input
+                      value={treasurer}
+                      className="border border-black w-[80%]"
+                      placeholder="Treasurer name.."
+                      onChange={e => setTreasurer(e.target.value)}
                     />
                   </span>{" "}
                 </li>
@@ -164,9 +195,9 @@ function Clubprofile() {
               <textarea className="w-[500px] h-[100px] " placeholder="Club achievements, awards, or recognition details"></textarea>
             </div>
             <div className="mb-4">
-                <Link to='/club-profile'>
+              <Link to='/club-profile'>
                 <button className="bg-black text-white w-[150px] p-1 rounded-md">Submit</button>
-                </Link>
+              </Link>
             </div>
           </div>
         </div>
@@ -175,4 +206,8 @@ function Clubprofile() {
   );
 }
 
-export default Clubprofile;
+const mapStateToProps = state => ({
+  club: state.club.club
+})
+
+export default connect(mapStateToProps)(Clubprofile)

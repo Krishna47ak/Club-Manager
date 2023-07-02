@@ -63,7 +63,9 @@ router.get('/', async (req, res) => {
 // To get a single club
 router.get('/:id', auth, async (req, res) => {
     try {
-        const club = await Club.findById(req.params.id)
+
+        const user = req.params.id
+        let club = await Club.findOne({ user })
         if (!club) {
             return res.status(404).json({ msg: "Club not found" })
         }

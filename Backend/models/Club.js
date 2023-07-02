@@ -24,6 +24,9 @@ const ClubSchema = new Schema({
     secretary: {
         type: String
     },
+    treasurer: {
+        type: String
+    },
     member1: {
         type: String
     },
