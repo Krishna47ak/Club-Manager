@@ -19,7 +19,7 @@ router.post('/', auth, [
     try {
         const user = await User.findById(req.user.id).select('-password')
 
-        const interests = req.body.interests.split(',').map(skill => skill.trim())
+        const interests = req.body.interests.split(',').map(interest => interest.trim())
 
         const newClub = new Club({
             user: req.user.id,
@@ -37,7 +37,7 @@ router.post('/', auth, [
 })
 
 // To get all clubs
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const clubs = await Club.find().sort({ date: -1 })
         res.json(clubs)
