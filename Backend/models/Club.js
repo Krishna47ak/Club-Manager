@@ -22,10 +22,12 @@ const ClubSchema = new Schema({
         type: [String],
         required: true
     },
-    rating: {
-        type: Number,
-        required: true
-    },
+    likes: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
