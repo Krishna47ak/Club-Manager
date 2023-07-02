@@ -17,11 +17,16 @@ router.post('/', auth, [
     }
 
     try {
-        const user = req.user.id
-        let admin = await Club.findOne({ user })
-        console.log(admin);
+        const admin = await User.findById(req.user.id).select('-password')
 
-        if (admin) {
+        const user = req.user.id
+        let adminClub = await Club.findOne({ user })
+
+        if (admin.role == 'student') {
+            return res.status(400).json({ errors: [{ msg: 'You have to be a admin' }] })
+        }
+
+        if (adminClub) {
             return res.status(400).json({ errors: [{ msg: 'User already has a club' }] })
         }
 
@@ -30,7 +35,9 @@ router.post('/', auth, [
         const newClub = new Club({
             user: req.user.id,
             description: req.body.description,
+            president: req.body.president,
             name: req.body.name,
+            collegename: admin.collegename,
             interests: interests,
         })
         const club = await newClub.save()
