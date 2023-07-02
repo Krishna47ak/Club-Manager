@@ -3,7 +3,7 @@
 # ClubManager Web App
 Welcome to ClubManager, a web application designed to help students find and explore clubs in college. This app aims to solve the problem faced by students when trying to discover clubs that align with their interests and skills. With ClubManager, students can easily sign up, search for clubs, and receive personalized club suggestions based on their input.
 
-## Features
+## Key Features:
 
 - **User Registration:** Students can sign up for an account using their email address and create a password.
 - **User Authentication:** Secure authentication ensures that only registered users can access the app.
@@ -13,8 +13,6 @@ Welcome to ClubManager, a web application designed to help students find and exp
 - **Club Details:** Users can view detailed information about each club, including descriptions, meeting times, locations, and contact information.
 - **Club Joining:** Students can request to join clubs they are interested in directly through the app.
 - **Club Management:** Club administrators have access to manage their club's information, including updating club details, approving/rejecting membership requests, and posting announcements or events.
-- **Notifications:** Users receive notifications about club-related updates, such as membership requests, club approvals, and upcoming events.
-- **User Dashboard:** A personalized dashboard provides users with an overview of their club memberships, notifications, and upcoming events.
 
 ## Technologies Used
 
@@ -24,3 +22,7 @@ Welcome to ClubManager, a web application designed to help students find and exp
 - **Authentication:** 
 - **API Integration:** Integration with external APIs (e.g., for club suggestions based on user input)
 - **Deployment:**
+  
+## Architecture Diagram:
+![Flow](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/60bb8061-ff9f-4170-9f29-3fe9904d4e21)
+
