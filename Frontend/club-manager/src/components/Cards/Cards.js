@@ -4,7 +4,7 @@ import CardItem from './CardItem.js';
 function Cards() {
   return (
     <div className='cards'>
-      <h1>Check out Recent Club activities!</h1>
+      <h1 className='text-3xl font-bold underline'>Check out Recent Club activities!</h1>
       <div className='cards__container'>
         <div className='cards__wrapper'>
           <ul className='cards__items'>

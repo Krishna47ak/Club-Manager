@@ -27,9 +27,9 @@ const SignIn = ({ isAuthenticated, login }) => {
   return (
     <Fragment>
       <section className="flex flex-col justify-center items-center space-y-10 p-10 h- " style={{ backgroundColor: "#004f58" }}>
-        <h1 className="text-white text-3xl mt-14 ">Login</h1>
+        <h1 className="text-white text-7xl mt-14 ">Login</h1>
         <p className="text-white text-xl ">
-          <i className="fas fa-user"></i> Sign In to Your Account
+          <i className="fas fa-user text-5xl"></i> Sign In to Your Account
         </p>
         <form className="flex flex-col " onSubmit={onSubmit}>
           <div className="mb-6">
@@ -54,7 +54,7 @@ const SignIn = ({ isAuthenticated, login }) => {
               required
             />
           </div>
-          <input type="submit" className="btn btn-primary " value="Login" />
+          <input type="submit" className="btn btn-primary" value="Login" />
         </form>
         <p className="text-white cursor-pointer pb-36 ">
           Don't have an account? <Link className='text-blue-400' to="/sign-up">Sign Up</Link>

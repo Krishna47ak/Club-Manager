@@ -1,13 +1,14 @@
 import React from 'react'
+import{Link} from 'react-router-dom'
 import car_club from '../assets/images/car-club.jpg'
 function Clubprofile() {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 h-screen">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/3">
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center justify-center mb-4 ">
             {/* Club Logo */}
-            <img src={car_club} alt="Club Logo" className="w-16 h-16" />
+            <img src={car_club} alt="Club Logo" className='w-[250px] h-[250px]' />
           </div>
           <div className="mb-4">
             {/* Club Name */}
@@ -71,29 +72,10 @@ function Clubprofile() {
             <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
             <p>Club achievements, awards, or recognition details</p>
           </div>
-          <div className="mb-4">
-            {/* Past Events and Activities */}
-            <h2 className="text-xl font-bold mb-2">Past Events and Activities</h2>
-            {/* Gallery of past events */}
-          </div>
-          <div className="mb-4">
-            {/* Links to External Resources */}
-            <h2 className="text-xl font-bold mb-2">Links to External Resources</h2>
-            <ul className="list-disc pl-6">
-              <li>Official Website: <a href="https://example.com">example.com</a></li>
-              <li>Social Media Pages: <a href="https://facebook.com/example">Facebook</a>, <a href="https://twitter.com/example">Twitter</a></li>
-              {/* Add more links */}
-            </ul>
-          </div>
-          <div>
-            {/* Related Clubs */}
-            <h2 className="text-xl font-bold mb-2">Related Clubs</h2>
-            <ul className="list-disc pl-6">
-              <li>Related Club 1</li>
-              <li>Related Club 2</li>
-              <li>Related Club 3</li>
-              {/* Add more related clubs */}
-            </ul>
+          <div className='mt-[100px]'>
+            <Link to='/eclubprofile'>
+            <button className='bg-black text-white w-[25%] h-[50px] rounded-lg '>Edit</button>
+            </Link>
           </div>
         </div>
       </div>
