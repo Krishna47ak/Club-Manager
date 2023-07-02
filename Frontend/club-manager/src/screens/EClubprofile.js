@@ -164,7 +164,7 @@ function Clubprofile() {
               <textarea className="w-[500px] h-[100px] " placeholder="Club achievements, awards, or recognition details"></textarea>
             </div>
             <div className="mb-4">
-                <Link to='/clubprofile'>
+                <Link to='/club-profile'>
                 <button className="bg-black text-white w-[150px] p-1 rounded-md">Submit</button>
                 </Link>
             </div>

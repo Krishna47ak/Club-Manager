@@ -8,6 +8,7 @@ import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/Signup.js";
 import Profile from './screens/Profile';
 import ClubProfile from './screens/ClubProfile'
+import EClubProfile from './screens/EClubProfile'
 import Footer from "./components/Footer/footer.js";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/sign-in" element={<SignIn />} />
           <Route exact path="/profile" element={<Profile/>} />
           <Route exact path="/club-profile" element={<ClubProfile/>} />
+          <Route exact path="/eclub-profile" element={<EClubProfile/>} />
           <Route exact path="/sign-up" element={<SignUp />} />
         </Routes>
         <Footer />

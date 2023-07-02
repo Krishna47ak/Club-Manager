@@ -73,7 +73,7 @@ function ClubProfile() {
             <p>Club achievements, awards, or recognition details</p>
           </div>
           <div className='mt-[100px]'>
-            <Link to='/eclubprofile'>
+            <Link to='/eclub-profile'>
             <button className='bg-black text-white w-[25%] h-[50px] rounded-lg '>Edit</button>
             </Link>
           </div>
