@@ -6,9 +6,8 @@ import Home from "./screens/Home";
 import Search from './screens/Search'
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/Signup.js";
-import Studentprofile from './screens/Studentprofile';
-import ClubProfile from './screens/Clubprofile'
-import EClubProfile from './screens/EClubprofile'
+import Profile from './screens/Profile';
+import ClubProfile from './screens/ClubProfile'
 import Footer from "./components/Footer/footer.js";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -29,9 +28,8 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/search" element={<Search />} />
           <Route exact path="/sign-in" element={<SignIn />} />
-          <Route exact path="/profile" element={<Studentprofile/>} />
-          <Route exact path="/clubprofile" element={<ClubProfile/>} />
-          <Route exact path="/eclubprofile" element={<EClubProfile/>} />
+          <Route exact path="/profile" element={<Profile/>} />
+          <Route exact path="/club-profile" element={<ClubProfile/>} />
           <Route exact path="/sign-up" element={<SignUp />} />
         </Routes>
         <Footer />

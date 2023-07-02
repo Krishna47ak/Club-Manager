@@ -1,7 +1,7 @@
 import React from 'react'
 import{Link} from 'react-router-dom'
 import car_club from '../assets/images/car-club.jpg'
-function Clubprofile() {
+function ClubProfile() {
   return (
     <div className="container mx-auto px-4 h-screen">
       <div className="flex flex-col md:flex-row">
@@ -83,4 +83,4 @@ function Clubprofile() {
   )
 }
 
-export default Clubprofile
+export default ClubProfile

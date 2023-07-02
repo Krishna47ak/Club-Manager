@@ -1,28 +1,51 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { BiSolidPencil } from 'react-icons/bi'
 import simg from "../assets/images/img-7.jpg"; //for image
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-function Studentprofile({ isAuthenticated }) {
+import { fetchUser } from "../store/actions/auth";
+
+function Profile({ isAuthenticated, user, fetchUser }) {
+
+  const inputRef = useRef('')
+  const [image, setImage] = useState('')
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
 
   if (!isAuthenticated) {
     return <Navigate to="/sign-in" />
+  }
+
+  const handleImageClick = () => {
+    inputRef.current.click()
+  }
+
+  const handleImageChange = (e) => {
+    console.log(URL.createObjectURL(e?.target?.files[0]));
+    setImage(e?.target?.files[0])
   }
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       {/* Left Section */}
       <div className="bg-gray-200 py-8 lg:w-1/3">
-        <div className="mx-auto h-24 w-24 rounded-full overflow-hidden">
+        <div className="relative" onClick={handleImageClick} >
           <img
-            src={simg}
-            alt="Profile Picture"
-            className="h-full w-full object-cover"
+            src={image ? URL.createObjectURL(image) : simg}
+            alt="dp"
+            className="h-48 w-48 rounded-full mx-auto overflow-hidden object-cover"
           />
+          <div className="absolute right-40 bottom-2 bg-white rounded-full p-1" >
+            <BiSolidPencil style={{ fontSize: 35 }} />
+          </div>
+          <input type="file" onChange={handleImageChange} ref={inputRef} accept="image/png, image/jpeg" style={{ display: 'none' }} />
         </div>
         <div className="mt-4 text-center">
-          <h2 className="text-xl font-semibold">Shashi</h2>
-          <p className="text-gray-500">Role: Student</p>
+          <h2 className="text-xl font-semibold">{user?.name}</h2>
+          <p className="text-gray-500">Role: {user?.role[0].toUpperCase() + user?.role.substring(1)}</p>
         </div>
       </div>
 
@@ -36,23 +59,23 @@ function Studentprofile({ isAuthenticated }) {
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div>
                 <p className="font-medium text-3xl">USN</p>
-                <p>ABCD12345678</p>
+                <p>{user?.usn}</p>
               </div>
               <div>
                 <p className="font-medium text-3xl">College</p>
-                <p>XYZ College</p>
+                <p>{user?.collegename}</p>
               </div>
               <div>
                 <p className="font-medium text-3xl">Email</p>
-                <p>xyz.abc@example.com</p>
+                <p>{user?.email}</p>
               </div>
               <div>
                 <p className="font-medium text-3xl">Mobile</p>
-                <p>+1 234 567 8901</p>
+                <p>+91 {user?.mobile}</p>
               </div>
               <div>
                 <p className="font-medium text-3xl">Gender</p>
-                <p>Male</p>
+                <p>{user?.gender[0].toUpperCase() + user?.gender.substring(1)}</p>
               </div>
             </div>
             <div className="flex justify-end mt-[200px]">
@@ -68,8 +91,9 @@ function Studentprofile({ isAuthenticated }) {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user
 })
 
 
-export default connect(mapStateToProps)(Studentprofile)
+export default connect(mapStateToProps, { fetchUser })(Profile)
