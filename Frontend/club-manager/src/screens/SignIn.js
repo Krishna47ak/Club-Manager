@@ -3,10 +3,12 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
 
 import { login } from "../store/actions/auth";
+import Spinner from "../components/Spinner/Spinner";
 
 const SignIn = ({ isAuthenticated, login }) => {
   const history = useNavigate()
 
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,12 +18,16 @@ const SignIn = ({ isAuthenticated, login }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     login(email, password, history)
-    console.log("logged");
   };
 
   if (isAuthenticated) {
     return <Navigate to="/profile" />
+  }
+
+  if (loading) {
+    return <Spinner />
   }
 
   return (
@@ -65,7 +71,8 @@ const SignIn = ({ isAuthenticated, login }) => {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading
 })
 
 export default connect(mapStateToProps, { login })(SignIn)

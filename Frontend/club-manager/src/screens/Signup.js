@@ -3,11 +3,12 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { signup } from '../store/actions/auth'
+import Spinner from '../components/Spinner/Spinner'
 
 const SignUp = ({ isAuthenticated, signup }) => {
   const history = useNavigate()
 
-
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,6 +30,7 @@ const SignUp = ({ isAuthenticated, signup }) => {
     if (password !== password2) {
       console.error("Password do not match");
     } else {
+      setLoading(true)
       signup(name, email, mobile, gender, role, usn, collegename, password, history)
     }
   }
@@ -37,6 +39,9 @@ const SignUp = ({ isAuthenticated, signup }) => {
     return <Navigate to="/profile" />
   }
 
+  if (loading) {
+    return <Spinner />
+  }
 
   return (
     <Fragment>

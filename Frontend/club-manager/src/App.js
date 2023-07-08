@@ -7,6 +7,7 @@ import Search from './screens/Search'
 import SignIn from "./screens/SignIn.js";
 import SignUp from "./screens/Signup.js";
 import Profile from './screens/Profile';
+import ClubProfile from "./screens/ClubProfile";
 import EditClub from "./screens/EditClub";
 import Footer from "./components/Footer/footer.js";
 
@@ -29,7 +30,7 @@ function App() {
           <Route exact path="/search" element={<Search />} />
           <Route exact path="/sign-in" element={<SignIn />} />
           <Route exact path="/profile" element={<Profile/>} />
-          {/* <Route exact path="/club-profile" element={<ClubProfile/>} /> */}
+          <Route exact path="/club-profile" element={<ClubProfile/>} />
           <Route exact path="/edit-club" element={<EditClub/>} />
           <Route exact path="/sign-up" element={<SignUp />} />
         </Routes>
