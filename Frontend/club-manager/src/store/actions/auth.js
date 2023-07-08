@@ -16,7 +16,7 @@ export const fetchUser = () => async dispatch => {
     } catch (err) {
         // dispatch({ type: AUTH_ERROR })
         const errors = err?.response?.data?.errors
-        console.log(errors);
+        console.error(errors);
     }
 }
 export const signout = () => async dispatch => {
@@ -57,6 +57,6 @@ export const signup = (name, email, mobile, gender, role, usn, collegename, pass
         history('/profile')
     } catch (err) {
         const errors = err?.response?.data?.errors
-        console.log(err);
+        console.error(errors);
     }
 }
