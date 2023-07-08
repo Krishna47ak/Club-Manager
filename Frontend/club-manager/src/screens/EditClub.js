@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
 
 
-function Clubprofile({ club }) {
+function EditProfile({ club }) {
   const [name, setName] = useState(club?.name)
   const [description, setDescription] = useState(club?.description)
   const [collegename, setCollegeName] = useState(club?.collegename)
@@ -210,4 +210,4 @@ const mapStateToProps = state => ({
   club: state.club.club
 })
 
-export default connect(mapStateToProps)(Clubprofile)
+export default connect(mapStateToProps)(EditProfile)
