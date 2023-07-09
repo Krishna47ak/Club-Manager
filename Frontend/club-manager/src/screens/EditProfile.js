@@ -6,15 +6,17 @@ import { BiSolidPencil } from "react-icons/bi";
 
 import ProfileInputEdit from '../components/Profile/ProfileInputEdit'
 import ProfileImage from '../assets/images/profile-icon.jpg'
+import Spinner from '../components/Spinner/Spinner';
 import { editProfile } from '../store/actions/profile';
 
 
-const EditProfile = ({ user, isAuthenticated, editProfile }) => {
+const EditProfile = ({ user, isAuthenticated, loading, editProfile }) => {
     const history = useNavigate()
 
     const inputRef = useRef("");
+    const [loading2, setLoading2] = useState(false)
 
-    const [img, setImg] = useState(user?.img || "")
+    const [img, setImg] = useState(user?.img)
     const [name, setName] = useState(user?.name)
     const [email, setEmail] = useState(user?.email)
     const [mobile, setMobile] = useState(user?.mobile)
@@ -23,10 +25,7 @@ const EditProfile = ({ user, isAuthenticated, editProfile }) => {
     const [gender, setGender] = useState(user?.gender)
     const [sem, setSem] = useState(user?.sem)
     const [course, setCourse] = useState(user?.course)
-    const [dateofbirth, setDOB] = useState('')
-
-    console.log(dateofbirth);
-
+    const [dateofbirth, setDOB] = useState(moment(user?.dob).format("YYYY-MM-DD"))
 
     useEffect(() => {
         setImg(user?.img)
@@ -38,35 +37,44 @@ const EditProfile = ({ user, isAuthenticated, editProfile }) => {
         setGender(user?.gender)
         setSem(user?.sem)
         setCourse(user?.course)
-        setDOB(user?.dateofbirth)
+        const date = moment(user?.dob).format("YYYY-MM-DD")
+        setDOB(date)
     }, [user])
 
     const handleImageChange = (e) => {
-        console.log(e?.target?.files);
-        setImg(e?.target?.files[0]);
+        var reader = new FileReader();
+
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            //   console.log(reader.result); //base64encoded string
+            setImg(reader.result);
+        };
     };
 
     const handleImageClick = () => {
         inputRef.current.click();
-      };
+    };
 
     const onSubmit = e => {
         e.preventDefault()
         const dob = moment.utc(dateofbirth).local().format('YYYY-MM-DDTHH:mm:SS.sss')
-        console.log(dob);
+        setLoading2(true)
         editProfile(img, name, mobile, usn, collegename, gender, course, sem, dob, history);
-        // setAlert('Profile Edited', 'bg-green-500')
     }
 
+    if (loading || loading2) {
+        return <Spinner />
+    }
+    
     return (
         <div className='flex items-center flex-col p-14' >
             <p className='text-3xl font-bold' >Edit Your Profile</p>
             <div>
                 <div>
-                    <form action="" className=" flex flex-col mt-7">
+                    <form className=" flex flex-col mt-7" action="/profile" >
                         <div className="relative w-48 mx-auto mb-5" onClick={handleImageClick}>
                             <img
-                                src={img ? URL.createObjectURL(img) : ProfileImage}
+                                src={img ? img : ProfileImage}
                                 alt="dp"
                                 className="h-44 w-44 rounded-full mx-auto overflow-hidden object-cover border-2 "
                             />
@@ -86,7 +94,7 @@ const EditProfile = ({ user, isAuthenticated, editProfile }) => {
                         <ProfileInputEdit onChange={e => setMobile(e.target.value)} title={'Mobile Number'} value={mobile} type={'tel'} name={'mobile'} />
                         <ProfileInputEdit onChange={e => setUSN(e.target.value)} title={'USN'} value={usn} type={'text'} name={'usn'} />
                         <ProfileInputEdit onChange={e => setCollegeName(e.target.value)} title={'College Name'} value={collegename} type={'text'} name={'collegename'} />
-                        <ProfileInputEdit onChange={e => setGender(e.target.value)} title={'Gender'} value={gender} type={'text'} name={'gender'} />
+                        <ProfileInputEdit gender={true} onChange={e => setGender(e.target.value)} title={'Gender'} value={gender} type={'text'} name={'gender'} />
                         <ProfileInputEdit onChange={e => setSem(e.target.value)} title={'Semester'} value={sem} type={'number'} name={'sem'} />
                         <ProfileInputEdit onChange={e => setCourse(e.target.value)} title={'Course'} value={course} type={'text'} name={'course'} />
                         <ProfileInputEdit onChange={e => setDOB(e.target.value)} title={'Date Of Birth'} value={dateofbirth} type={'date'} name={'dob'} />
@@ -102,6 +110,7 @@ const EditProfile = ({ user, isAuthenticated, editProfile }) => {
 
 const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading,
     user: state.auth.user,
 });
 

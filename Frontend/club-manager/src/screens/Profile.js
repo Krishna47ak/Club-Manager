@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ProfileImage from "../assets/images/profile-icon.jpg";
 import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { BiSolidPencil, BiSearch } from "react-icons/bi";
 
 import { fetchUser } from "../store/actions/auth";
 
@@ -20,9 +21,9 @@ function Profile({ isAuthenticated, user, fetchUser }) {
       {/* Left Section */}
       <div className="bg-gray-200 py-8 lg:w-1/3">
         <div>
-          <div className="relative w-48 mx-auto">
+          <div className="relative w-48 mx-auto mt-7">
             <img
-              src={user?.img ? URL.createObjectURL(user?.img) : ProfileImage}
+              src={user?.img ? user?.img : ProfileImage}
               alt="dp"
               className="h-44 w-44 rounded-full mx-auto overflow-hidden object-cover"
             />
@@ -33,6 +34,22 @@ function Profile({ isAuthenticated, user, fetchUser }) {
           <p className="text-gray-500">
             Role: {(user?.role[0].toUpperCase() + user?.role.substring(1)) || ''}
           </p>
+        </div>
+        <div className="flex justify-center mt-14">
+          <button className="bg-black hover:bg-[#01616c] text-white w-[30%] h-[40px] rounded-md p-2">
+            <Link className="flex" to="/edit-Profile">
+              <BiSolidPencil style={{ fontSize: 23, marginRight: 8 }} />
+              Edit Profile
+            </Link>
+          </button>
+        </div>
+        <div className="flex justify-center mt-10">
+          <button className="bg-black hover:bg-[#01616c] text-white w-[30%] h-[40px] rounded-md p-2">
+            <Link className="flex" to="/search">
+              <BiSearch style={{ fontSize: 23, marginRight: 4 }} />
+              Search Clubs
+            </Link>
+          </button>
         </div>
       </div>
 
@@ -65,13 +82,6 @@ function Profile({ isAuthenticated, user, fetchUser }) {
                 </p>
               </div>
             </div>
-            <Link to="/search">
-              <div className="flex justify-end mt-[200px]">
-                <button className="bg-black hover:bg-[#01616c] text-white w-[30%] h-[40px] rounded-md p-2">
-                  Search Clubs
-                </button>
-              </div>
-            </Link>
           </div>
         </div>
       </div>
