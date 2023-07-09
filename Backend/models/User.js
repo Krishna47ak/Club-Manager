@@ -35,6 +35,15 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    course: {
+        type: String,
+    },
+    dob: {
+        type: Date
+    },
+    sem: {
+        type: Number
+    },
     password: {
         type: String,
         required: true
