@@ -28,13 +28,16 @@ export const getClub = (id) => async dispatch => {
         }
     }
 
-    try {
-        const response = await clubApi.get(`/api/clubs/${id}`, config)
-        dispatch({ type: GET_CLUB, payload: response?.data })
-    } catch (err) {
-        // dispatch({ type: AUTH_ERROR })
-        const errors = err?.response?.data?.errors
-        console.log(errors);
+    if (id) {
+        try {
+            const response = await clubApi.get(`/api/clubs/${id}`, config)
+            dispatch({ type: GET_CLUB, payload: response?.data })
+        } catch (err) {
+            // dispatch({ type: AUTH_ERROR })
+            const errors = err?.response?.data?.errors
+            console.log(errors);
+        }
     }
+
 }
 

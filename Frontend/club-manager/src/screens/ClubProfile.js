@@ -1,43 +1,51 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getClub } from '../store/actions/club'
+import { BiSolidPencil } from "react-icons/bi";
 
 import car_club from '../assets/images/car-club.jpg'
 
 function ClubProfile({ club, user, getClub }) {
   useEffect(() => {
     getClub(user?._id)
-  }, [])
+  }, [user])
 
   return (
-    <div className="container mx-auto px-4 h-screen">
-      <div className="flex flex-col md:flex-row">
-        <div className="md:w-1/3">
-          <div className="flex items-center justify-center mb-4 ">
-            {/* Club Logo */}
-            <img src={car_club} alt="Club Logo" className='w-[250px] h-[250px]' />
-          </div>
+    <div className=" mx-auto px-14 my-5">
+      <button className="absolute top-32 bg-black hover:bg-[#01616c] text-white w-[10%] h-[40px] rounded-md p-2">
+        <Link className="flex" to="/edit-club">
+          <BiSolidPencil style={{ fontSize: 23, marginRight: 9 }} />
+          Edit Club
+        </Link>
+      </button>
+      {/* Club Logo */}
+      <div className='flex justify-between items-center'  >
+        <img src={require("../assets/images/club_logo.png")} alt="Logo" className='w-52 h-52 ml-52 rounded-xl ' />
+        <img src={car_club} alt="Club Logo" className='w-[42%] h-80 rounded-2xl ' />
+      </div>
+      <div className="flex justify-center space-x-60 mt-10">
+        <div className="flex flex-col items-center text-center w-[30rem]">
           <div className="mb-4">
             {/* Club Name */}
-            <h1 className="text-2xl font-bold">{club?.name}</h1>
+            <h1 className="text-3xl underline font-bold">{club?.name}</h1>
             {/* Club Description */}
-            <p className="text-gray-600">{club?.description}</p>
+            <p className="text-gray-600 mt-7">{club?.description}</p>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 flex">
             {/* College Name */}
-            <p className="text-gray-600">{club?.collegename}</p>
+            <p>College name :</p>
+            <p className="text-gray-600 ml-3">{club?.collegename}</p>
           </div>
           <div className="mb-4">
             {/* Club Contact Information */}
-            <p className="text-gray-600">Contact details: email, phone, social media handles</p>
-          </div>
-          <div className="mb-4">
-            {/* Meeting Schedule */}
-            <p className="text-gray-600">Meeting schedule: days, times, locations</p>
+            <p className="text-gray-700 font-bold text-lg">Contact details: </p>
+            <p className="text-gray-600">email : {club?.contactemail}</p>
+            <p className="text-gray-600">phone : {club?.contactmobile}</p>
+            <p className="text-gray-600">social media handles :</p>
           </div>
         </div>
-        <div className="md:w-2/3 md:pl-8">
+        <div className="w-[30rem]">
           <div className="mb-4">
             {/* Club Officers */}
             <h2 className="text-xl font-bold mb-2">Club Officers</h2>
@@ -50,40 +58,18 @@ function ClubProfile({ club, user, getClub }) {
           </div>
           <div className="mb-4">
             {/* Club Members */}
-            <h2 className="text-xl font-bold mb-2">Club Members</h2>
-            <ul className="grid grid-cols-3 gap-4">
-              <li>Member 1</li>
-              <li>Member 2</li>
-              <li>Member 3</li>
+            <h2 className="text-xl font-bold">Club Members</h2>
+            <ul className="flex flex-wrap w-96">
+              {club?.members.map((member) => (
+                <li key={member} className='bg-blue-500 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{member}</li>
+              ))}
               {/* Add more members */}
             </ul>
-          </div>
-          <div className="mb-4">
-            {/* Club Events */}
-            <h2 className="text-xl font-bold mb-2">Club Events</h2>
-            <div className="flex space-x-4">
-              {/* Event 1 */}
-              <div>
-                <img src="/path/to/event-image-1.jpg" alt="Event 1" className="w-32 h-24 object-cover" />
-                <p>Event 1 details</p>
-              </div>
-              {/* Event 2 */}
-              <div>
-                <img src="/path/to/event-image-2.jpg" alt="Event 2" className="w-32 h-24 object-cover" />
-                <p>Event 2 details</p>
-              </div>
-              {/* Add more events */}
-            </div>
           </div>
           <div className="mb-4">
             {/* Club Achievements */}
             <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
             <p>Club achievements, awards, or recognition details</p>
-          </div>
-          <div className='mt-[100px]'>
-            <Link to='/edit-club'>
-              <button className='bg-black text-white w-[25%] h-[50px] rounded-lg '>Edit</button>
-            </Link>
           </div>
         </div>
       </div>

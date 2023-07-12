@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ProfileImage from "../assets/images/profile-icon.jpg";
 import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import Moment from 'react-moment'
 import { BiSolidPencil, BiSearch } from "react-icons/bi";
 
 import { fetchUser } from "../store/actions/auth";
@@ -37,7 +38,7 @@ function Profile({ isAuthenticated, user, fetchUser }) {
         </div>
         <div className="flex justify-center mt-14">
           <button className="bg-black hover:bg-[#01616c] text-white w-[30%] h-[40px] rounded-md p-2">
-            <Link className="flex" to="/edit-Profile">
+            <Link className="flex" to="/edit-profile">
               <BiSolidPencil style={{ fontSize: 23, marginRight: 8 }} />
               Edit Profile
             </Link>
@@ -74,6 +75,18 @@ function Profile({ isAuthenticated, user, fetchUser }) {
               <div>
                 <p className="font-medium text-3xl">Mobile</p>
                 <p>+91 {user?.mobile || ''}</p>
+              </div>
+              <div>
+                <p className="font-medium text-3xl">Course</p>
+                <p>&nbsp;{user?.course || ''}</p>
+              </div>
+              <div>
+                <p className="font-medium text-3xl">Semester</p>
+                <p>&nbsp;{user?.sem || ''}{user?.sem==1?'st':user?.sem==2?'nd':user?.sem==3?'rd':'th'}</p>
+              </div>
+              <div>
+                <p className="font-medium text-3xl">Date Of Birth</p>
+                <p>&nbsp;<Moment format='DD/MM/YYYY' >{user?.dob}</Moment></p>
               </div>
               <div>
                 <p className="font-medium text-3xl">Gender</p>
