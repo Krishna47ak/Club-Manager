@@ -6,13 +6,22 @@ const ClubSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    img: {
+    logoimg: {
+        type: String
+    },
+    coverimg: {
         type: String
     },
     name: {
         type: String,
         unique: true,
         required: true
+    },
+    contactemail: {
+        type: String
+    },
+    contactmobile: {
+        type: Number
     },
     president: {
         type: String,
@@ -27,14 +36,8 @@ const ClubSchema = new Schema({
     treasurer: {
         type: String
     },
-    member1: {
-        type: String
-    },
-    member2: {
-        type: String
-    },
-    member3: {
-        type: String
+    members: {
+        type: [String]
     },
     collegename: {
         type: String,
@@ -62,24 +65,12 @@ const ClubSchema = new Schema({
                 type: String,
                 required: true
             },
+            required: false
         }
     ],
-    achievements: [
-        {
-            img: {
-                type: String
-            },
-            name: {
-                type: String,
-                unique: true,
-                required: true
-            },
-            description: {
-                type: String,
-                required: true
-            },
-        }
-    ],
+    achievements: {
+        type: [String],
+    },
     likes: [{
         user: {
             type: Schema.Types.ObjectId,

@@ -35,10 +35,17 @@ router.post('/', auth, [
         const newClub = new Club({
             user: req.user.id,
             description: req.body.description,
-            president: req.body.president,
+            president: admin.name,
             name: req.body.name,
             collegename: admin.collegename,
             interests: interests,
+            logoimg: "",
+            coverimg: "",
+            contactemail: "",
+            contactmobile: null,
+            vicepresident: "",
+            secretary: "",
+            treasurer: ""
         })
         const club = await newClub.save()
         res.json(club)
@@ -47,6 +54,51 @@ router.post('/', auth, [
         res.status(500).send('Server Error')
     }
 
+})
+
+// To edit club
+router.post('/edit', auth, [
+    check('name', 'Name is required').not().isEmpty(),
+    check('description', 'Description is required').not().isEmpty(),
+    check('interests', 'Interests is required').not().isEmpty()
+], async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    }
+
+    try {
+        const admin = await User.findById(req.user.id).select('-password')
+        const user = req.user.id
+        const club = await Club.findOne({ user })
+
+        const { logoimg, coverimg, name, contactemail, contactmobile, description, vicepresident, secretary, treasurer } = req.body
+
+        const members = req.body.members.split(',').map(member => member.trim())
+        const achievements = req.body.achievements.split(',').map(achievement => achievement.trim())
+        const interests = req.body.interests.split(',').map(interest => interest.trim())
+
+        club.logoimg = logoimg
+        club.coverimg = coverimg
+        club.name = name
+        club.description = description
+        club.contactemail = contactemail
+        club.contactmobile = contactmobile
+        club.collegename = admin.collegename,
+        club.interests = interests
+        club.president = admin.name
+        club.vicepresident = vicepresident
+        club.secretary = secretary
+        club.treasurer = treasurer
+        club.members = members
+        club.achievements = achievements
+
+        await club.save()
+        res.json(club)
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error')
+    }
 })
 
 // To get all clubs
