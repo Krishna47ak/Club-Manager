@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { getClub } from '../store/actions/club'
 import { BiSolidPencil } from "react-icons/bi";
 
-import car_club from '../assets/images/car-club.jpg'
+import default_logo from '../assets/images/club_logo_default.png'
+import default_cover from '../assets/images/cover_image_default.png'
 
 function ClubProfile({ club, user, getClub }) {
   useEffect(() => {
@@ -12,7 +13,7 @@ function ClubProfile({ club, user, getClub }) {
   }, [user])
 
   return (
-    <div className=" mx-auto px-14 my-5">
+    <div className="mx-auto px-14 my-5">
       <button className="absolute top-32 bg-black hover:bg-[#01616c] text-white w-[10%] h-[40px] rounded-md p-2">
         <Link className="flex" to="/edit-club">
           <BiSolidPencil style={{ fontSize: 23, marginRight: 9 }} />
@@ -21,8 +22,8 @@ function ClubProfile({ club, user, getClub }) {
       </button>
       {/* Club Logo */}
       <div className='flex justify-between items-center'  >
-        <img src={require("../assets/images/club_logo.png")} alt="Logo" className='w-52 h-52 ml-52 rounded-xl ' />
-        <img src={car_club} alt="Club Logo" className='w-[42%] h-80 rounded-2xl ' />
+        <img src={club?.logoimg ? club?.logoimg : default_logo} alt="Logo" className='w-52 h-52 ml-52 rounded-xl' />
+        <img src={club?.coverimg ? club?.coverimg : default_cover} alt="Club Logo" className='w-[42%] h-80 rounded-2xl' />
       </div>
       <div className="flex justify-center space-x-60 mt-10">
         <div className="flex flex-col items-center text-center w-[30rem]">
@@ -61,7 +62,7 @@ function ClubProfile({ club, user, getClub }) {
             <h2 className="text-xl font-bold">Club Members</h2>
             <ul className="flex flex-wrap w-96">
               {club?.members.map((member) => (
-                <li key={member} className='bg-blue-500 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{member}</li>
+                <li key={member} className='bg-blue-600 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{member}</li>
               ))}
               {/* Add more members */}
             </ul>

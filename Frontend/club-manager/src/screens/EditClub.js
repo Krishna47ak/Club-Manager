@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from 'react-router-dom'
 import { connect } from "react-redux";
+import { BiSolidPencil } from "react-icons/bi";
+
+import default_logo from '../assets/images/club_logo_default.png'
+import default_cover from '../assets/images/cover_image_default.png'
+import ProfileInputEdit from "../components/Profile/ProfileInputEdit";
 
 
 function EditProfile({ club }) {
+  const inputRef1 = useRef("");
+  const inputRef2 = useRef("");
+
+
+  const [coverImg, setCoverImg] = useState('');
+  const [logoImg, setLogoImg] = useState('');
   const [name, setName] = useState(club?.name)
   const [description, setDescription] = useState(club?.description)
   const [collegename, setCollegeName] = useState(club?.collegename)
@@ -11,146 +22,132 @@ function EditProfile({ club }) {
   const [vicepresident, setVicePresident] = useState(club?.vicepresident)
   const [secretary, setSecretary] = useState(club?.secretary)
   const [treasurer, setTreasurer] = useState(club?.treasurer)
+  const [contactemail, setContactEmail] = useState(club?.contactemail)
+  const [contactmobile, setContactMobile] = useState(club?.contactmobile)
+  const [members, setMembers] = useState(club?.members?.toString())
+  const [achievements, setAchievements] = useState(club?.achievements?.toString())
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(URL.createObjectURL(file));
+
+  const handleImageChange = (e) => {
+    var reader = new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      if (e.target.name == 'coverimg') {
+        setCoverImg(reader.result);
+      } else {
+        setLogoImg(reader.result);
+      }
+    };
+  };
+
+  const handleImageClick1 = () => {
+    inputRef1.current.click();
+  };
+
+  const handleImageClick2 = () => {
+    inputRef2.current.click();
   };
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="p-10 py-20">
       <form>
-        <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/3">
-            <div className="flex items-center justify-center mb-4">
-              {/* Club Logo */}
-              <div className="w-[250px] h-[250px]">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                />
-                {selectedImage && <img src={selectedImage} alt="Selected" />}
+        <div className="flex justify-center space-x-40">
+
+          <div className="flex flex-col items-center mb-4">
+            {/* Club Cover */}
+            <div className="relative" onClick={handleImageClick1} >
+              <input
+                name="coverimg"
+                ref={inputRef1}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
+              <img
+                src={coverImg ? coverImg : default_cover}
+                alt="dp"
+                className="w-[30rem] h-80 rounded-2xl "
+              />
+              <div className="absolute -right-5 -top-4 bg-white border-2 rounded-full p-1">
+                <BiSolidPencil style={{ fontSize: 60 }} />
               </div>
             </div>
-            <div className="mb-4">
-              {/* Club Name */}
-              <span className="border border-black p-1 flex ">
-                <input value={name} onChange={e => setName(e.target.value)} type="text" placeholder="Club Name" className="w-full" />
-              </span>
-              {/* Club Description */}
-              <textarea
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                className="mt-2 w-[100%] h-[100px] border border-black"
-                placeholder="Club description..."
-              ></textarea>
-            </div>
-            <div className="mb-4">
-              {/* College Name */}
+            {/* Club Logo */}
+            <div className="mt-20 relative" onClick={handleImageClick2} >
               <input
-                value={collegename}
-                onChange={e => setCollegeName(e.target.value)}
-                placeholder="College name"
-                className="border border-black w-full"
+                name="logoimg"
+                ref={inputRef2}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
               />
+              <img
+                src={logoImg ? logoImg : default_logo}
+                alt="dp"
+                className="w-80 h-80 rounded-2xl "
+              />
+              <div className="absolute -right-5 -top-4 bg-white border-2 rounded-full p-1">
+                <BiSolidPencil style={{ fontSize: 60 }} />
+              </div>
+            </div>
+            <button className=" bg-black hover:bg-[#01616c] text-white w-[40%] h-12 justify-items-end justify-end justify-self-end mt-auto rounded-md p-2">
+              <Link className="flex justify-center text-lg" to="/edit-club">
+                Submit
+              </Link>
+            </button>
+          </div>
+
+          <div>
+            <div className="flex flex-col mb-4">
+              <ProfileInputEdit onChange={e => setName(e.target.value)} title={'Club Name'} value={name} type={'text'} name={'clubname'} />
+              <div className="flex px-5 items-center" >
+                <p className='font-bold mr-5 w-40' >Description :</p>
+                <textarea
+                  value={description}
+                  rows={3}
+                  onChange={e => setDescription(e.target.value)}
+                  className="my-4 p-2 w-96 border border-gray-300"
+                  placeholder="Club description..."
+                />
+              </div>
+              <ProfileInputEdit disabled={true} title={'College Name'} value={collegename} type={'text'} name={'collegename'} />
             </div>
 
             <div className="mb-4">
-              {/* Meeting Schedule */}
-              <p className="text-gray-600">
-                Meeting schedule: days, times, locations
-              </p>
-            </div>
-          </div>
-          <div className="md:w-2/3 md:pl-8">
-            <div className="mb-4">
               {/* Club Officers */}
               <h2 className="text-xl font-bold mb-2">Club Officers</h2>
-              <ul className="list-disc pl-6 grid  gap-2 ">
-                <li>
-                  President:
-                  <span>
-                    <input
-                      value={president}
-                      className="border border-black w-[80%]"
-                      placeholder="President name.."
-                      onChange={e => setPresident(e.target.value)}
-                    />
-                  </span>{" "}
-                </li>
-                <li>
-                  Vice President:
-                  <span>
-                    <input
-                      value={vicepresident}
-                      className="border border-black w-[80%]"
-                      placeholder="Vice President name.."
-                      onChange={e => setVicePresident(e.target.value)}
-                    />
-                  </span>{" "}
-                </li>
-                <li>
-                  Secretary:
-                  <span>
-                    <input
-                      value={secretary}
-                      className="border border-black w-[80%]"
-                      placeholder="Secretary name.."
-                      onChange={e => setSecretary(e.target.value)}
-                    />
-                  </span>{" "}
-                </li>
-                <li>
-                  Treasurer:
-                  <span>
-                    <input
-                      value={treasurer}
-                      className="border border-black w-[80%]"
-                      placeholder="Treasurer name.."
-                      onChange={e => setTreasurer(e.target.value)}
-                    />
-                  </span>{" "}
-                </li>
-              </ul>
+              <ProfileInputEdit disabled={true} title={'President'} value={president} type={'text'} name={'president'} />
+              <ProfileInputEdit onChange={e => setVicePresident(e.target.value)} title={'Vice President'} value={vicepresident} type={'text'} name={'vice president'} />
+              <ProfileInputEdit onChange={e => setSecretary(e.target.value)} title={'Secretary'} value={secretary} type={'text'} name={'secretary'} />
+              <ProfileInputEdit onChange={e => setTreasurer(e.target.value)} title={'Treasurer'} value={treasurer} type={'text'} name={'treasurer'} />
+            </div>
+
+            <div className="mb-4">
+              {/* Contact Details */}
+              <h2 className="text-xl font-bold mb-5">Contact Details</h2>
+              <ProfileInputEdit onChange={e => setContactEmail(e.target.value)} title={'Email'} value={contactemail} type={'text'} name={'treasurer'} />
+              <ProfileInputEdit onChange={e => setContactMobile(e.target.value)} title={'Phone Number'} value={contactmobile} type={'text'} name={'treasurer'} />
             </div>
             <div className="mb-4">
               {/* Club Members */}
-              <h2 className="text-xl font-bold mb-2">Club Members</h2>
-              <ul className="grid grid-cols-3 gap-4">
-                <li>
-                  <span>
-                    <input
-                      className="border border-black w-[80%]"
-                      placeholder="Member 1"
-                    />
-                  </span>{" "}
-                </li>
-                <li>
-                  <span>
-                    <input
-                      className="border border-black w-[80%]"
-                      placeholder="Member 2"
-                    />
-                  </span>{" "}
-                </li>
-                <li>
-                  <span>
-                    <input
-                      className="border border-black w-[80%]"
-                      placeholder="Member 3"
-                    />
-                  </span>{" "}
-                </li>
-                {/* Add more members */}
-              </ul>
+              <h2 className="text-xl font-bold mb-5">Club Members</h2>
+              <textarea
+                cols={50}
+                rows={2}
+                value={members}
+                onChange={e => setMembers(e.target.value)}
+                className="border border-gray-300 p-2 ml-5"
+                placeholder="Members"
+              />
             </div>
-            <div className="mb-4">
-              {/* Club Events */}
+
+            {/* Club Events */}
+            {/* <div className="mb-4">
               <h2 className="text-xl font-bold mb-2">Club Events</h2>
               <div className="flex space-x-4">
-                {/* Event 1 */}
                 <div>
                   <div className="w-[250px] h-[250px]">
                     <input
@@ -158,9 +155,6 @@ function EditProfile({ club }) {
                       accept="image/*"
                       onChange={handleImageUpload}
                     />
-                    {selectedImage && (
-                      <img src={selectedImage} alt="Selected" />
-                    )}
                   </div>
                   <p>
                     <span>
@@ -168,37 +162,15 @@ function EditProfile({ club }) {
                     </span>
                   </p>
                 </div>
-                {/* Event 2 */}
-                <div>
-                  <div className="w-[250px] h-[250px]">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                    {selectedImage && (
-                      <img src={selectedImage} alt="Selected" />
-                    )}
-                  </div>
-                  <p>
-                    <span>
-                      <textarea placeholder="event details"></textarea>
-                    </span>
-                  </p>
-                </div>
-                {/* Add more events */}
               </div>
-            </div>
+            </div> */}
+
             <div className="mb-4">
               {/* Club Achievements */}
-              <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
-              <textarea className="w-[500px] h-[100px] " placeholder="Club achievements, awards, or recognition details"></textarea>
+              <h2 className="text-xl font-bold mb-5">Club Achievements</h2>
+              <textarea cols={50} rows={2} value={achievements} onChange={e => setAchievements(e.target.value)} className="p-2 border border-gray-300 ml-5" placeholder="Club achievements, awards, or recognition details"></textarea>
             </div>
-            <div className="mb-4">
-              <Link to='/club-profile'>
-                <button className="bg-black text-white w-[150px] p-1 rounded-md">Submit</button>
-              </Link>
-            </div>
+
           </div>
         </div>
       </form>
