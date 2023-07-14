@@ -1,7 +1,3 @@
-# Track 1 – Full Stack Web Application
-
-# Team-Frost-Club-Manager
-
 # ClubManager Web App
 Welcome to ClubManager, a web application designed to help students find and explore clubs in college. This app aims to solve the problem faced by students when trying to discover clubs that align with their interests and skills. With ClubManager, students can easily sign up, search for clubs, and receive personalized club suggestions based on their input.
 
@@ -23,7 +19,7 @@ Welcome to ClubManager, a web application designed to help students find and exp
 - **Database:** MongoDB
 - **Authentication:** 
 - **API Integration:** Integration with external APIs (e.g., for club suggestions based on user input)
-- **Deployment:**
+- **Deployment:** https://club-manger.vercel.app/
   
 ## Architecture Diagram:
 ![Flow](https://github.com/Krishna47ak/Team-Frost-Club-Manager/assets/107978867/60bb8061-ff9f-4170-9f29-3fe9904d4e21)
