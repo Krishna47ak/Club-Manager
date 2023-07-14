@@ -6,20 +6,25 @@ import { BiSolidPencil } from "react-icons/bi";
 
 import default_logo from '../assets/images/club_logo_default.png'
 import default_cover from '../assets/images/cover_image_default.png'
+import Spinner from '../components/Spinner/Spinner';
 
-function ClubProfile({ club, user, getClub }) {
+function ClubProfile({ club, user, loading, loading2, getClub }) {
   useEffect(() => {
     getClub(user?._id)
   }, [user])
 
+  if (loading || loading2) {
+    return <Spinner />
+  }
+
   return (
     <div className="mx-auto px-14 my-5">
-      <button className="absolute top-32 bg-black hover:bg-[#01616c] text-white w-[10%] h-[40px] rounded-md p-2">
-        <Link className="flex" to="/edit-club">
+      <Link className="absolute top-32 bg-black hover:bg-[#01616c] text-white w-[10%] h-[40px] rounded-md p-2" to="/edit-club">
+        <button className="flex">
           <BiSolidPencil style={{ fontSize: 23, marginRight: 9 }} />
           Edit Club
-        </Link>
-      </button>
+        </button>
+      </Link>
       {/* Club Logo */}
       <div className='flex justify-between items-center'  >
         <img src={club?.logoimg ? club?.logoimg : default_logo} alt="Logo" className='w-52 h-52 ml-52 rounded-xl' />
@@ -43,7 +48,9 @@ function ClubProfile({ club, user, getClub }) {
             <p className="text-gray-700 font-bold text-lg">Contact details: </p>
             <p className="text-gray-600">email : {club?.contactemail}</p>
             <p className="text-gray-600">phone : {club?.contactmobile}</p>
-            <p className="text-gray-600">social media handles :</p>
+            {club?.socialmedia?.length > 0 && (
+              <p className="text-gray-600">social media handles :</p>
+            )}
           </div>
         </div>
         <div className="w-[30rem]">
@@ -57,21 +64,28 @@ function ClubProfile({ club, user, getClub }) {
               <li>Treasurer: {club?.treasurer}</li>
             </ul>
           </div>
-          <div className="mb-4">
-            {/* Club Members */}
-            <h2 className="text-xl font-bold">Club Members</h2>
-            <ul className="flex flex-wrap w-96">
-              {club?.members.map((member) => (
-                <li key={member} className='bg-blue-600 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{member}</li>
-              ))}
-              {/* Add more members */}
-            </ul>
-          </div>
-          <div className="mb-4">
-            {/* Club Achievements */}
-            <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
-            <p>Club achievements, awards, or recognition details</p>
-          </div>
+          {/* Club Members */}
+          {club?.members?.length > 0 && (
+            <div className="mb-4">
+              <h2 className="text-xl font-bold">Club Members</h2>
+              <ul className="flex flex-wrap w-[25rem]">
+                {club?.members.map((member) => (
+                  <li key={member} className='bg-blue-600 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{member}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {/* Club Achievements */}
+          {club?.achievements[0].length > 0 && (
+            <div className="mb-4">
+              <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
+              <ul className="flex flex-wrap w-[25rem]">
+                {club?.achievements.map((achievements) => (
+                  <li key={achievements} className='bg-cyan-600 mt-3 mr-5 text-white p-1 px-2 rounded-xl' >{achievements}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -80,7 +94,9 @@ function ClubProfile({ club, user, getClub }) {
 
 const mapStateToProps = state => ({
   club: state.club.club,
-  user: state.auth.user
+  user: state.auth.user,
+  loading: state.auth.loading,
+  loading2: state.club.loading
 })
 
 export default connect(mapStateToProps, { getClub })(ClubProfile)

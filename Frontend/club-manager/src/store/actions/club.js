@@ -1,5 +1,5 @@
 import clubApi from '../../api/clubApi'
-import { FETCH_CLUBS, GET_CLUB } from '../types'
+import { EDIT_CLUB, FETCH_CLUBS, GET_CLUB } from '../types'
 
 
 export const fetchClubs = () => async dispatch => {
@@ -27,7 +27,6 @@ export const getClub = (id) => async dispatch => {
             "x-auth-token": localStorage.getItem('token')
         }
     }
-
     if (id) {
         try {
             const response = await clubApi.get(`/api/clubs/${id}`, config)
@@ -38,6 +37,23 @@ export const getClub = (id) => async dispatch => {
             console.log(errors);
         }
     }
-
 }
 
+export const editClub = (logoimg, coverimg, name, contactemail, contactmobile, president, vicepresident, secretary, treasurer, members, description, interests, achievements, history) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            "x-auth-token": localStorage.getItem('token')
+        }
+    }
+
+    const body = JSON.stringify({ logoimg, coverimg, name, contactemail, contactmobile, president, vicepresident, secretary, treasurer, members, description, interests, achievements, history })
+    try {
+        const response = await clubApi.post('/api/clubs/edit', body, config)
+        dispatch({ type: EDIT_CLUB, payload: response?.data })
+        history('/club-profile')
+    } catch (err) {
+        const errors = err?.response?.data?.errors
+        console.error(errors);
+    }
+}

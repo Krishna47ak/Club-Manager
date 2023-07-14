@@ -1,20 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { connect } from "react-redux";
 import { BiSolidPencil } from "react-icons/bi";
 
 import default_logo from '../assets/images/club_logo_default.png'
 import default_cover from '../assets/images/cover_image_default.png'
 import ProfileInputEdit from "../components/Profile/ProfileInputEdit";
+import Spinner from "../components/Spinner/Spinner";
+import { editClub, getClub } from "../store/actions/club";
 
+function EditProfile({ club, user, loading, editClub, getClub }) {
+  const history = useNavigate()
 
-function EditProfile({ club }) {
   const inputRef1 = useRef("");
   const inputRef2 = useRef("");
 
+  const [loading2, setLoading2] = useState(false)
 
-  const [coverImg, setCoverImg] = useState('');
-  const [logoImg, setLogoImg] = useState('');
+  const [coverImg, setCoverImg] = useState(club?.coverimg);
+  const [logoImg, setLogoImg] = useState(club?.logoimg);
   const [name, setName] = useState(club?.name)
   const [description, setDescription] = useState(club?.description)
   const [collegename, setCollegeName] = useState(club?.collegename)
@@ -24,9 +29,30 @@ function EditProfile({ club }) {
   const [treasurer, setTreasurer] = useState(club?.treasurer)
   const [contactemail, setContactEmail] = useState(club?.contactemail)
   const [contactmobile, setContactMobile] = useState(club?.contactmobile)
-  const [members, setMembers] = useState(club?.members?.toString())
-  const [achievements, setAchievements] = useState(club?.achievements?.toString())
+  const [members, setMembers] = useState(club?.members.toString())
+  const [clubInterests, setClubInterests] = useState(club?.interests.toString())
+  const [achievements, setAchievements] = useState(club?.achievements.toString())
 
+  useEffect(() => {
+    getClub(user?._id)
+  }, [user])
+
+  useEffect(() => {
+    setCoverImg(club?.coverimg)
+    setLogoImg(club?.logoimg)
+    setName(club?.name)
+    setDescription(club?.description)
+    setCollegeName(club?.collegename)
+    setPresident(club?.president)
+    setVicePresident(club?.vicepresident)
+    setSecretary(club?.secretary)
+    setTreasurer(club?.treasurer)
+    setContactEmail(club?.contactemail)
+    setContactMobile(club?.contactmobile)
+    setMembers(club?.members.toString())
+    setClubInterests(club?.interests.toString())
+    setAchievements(club?.achievements.toString())
+  }, [club])
 
   const handleImageChange = (e) => {
     var reader = new FileReader();
@@ -48,6 +74,18 @@ function EditProfile({ club }) {
   const handleImageClick2 = () => {
     inputRef2.current.click();
   };
+  console.log(clubInterests);
+
+  const onSubmit = e => {
+    e.preventDefault()
+    setLoading2(true)
+    const interests = clubInterests.toLowerCase()
+    editClub(logoImg, coverImg, name, contactemail, contactmobile, president, vicepresident, secretary, treasurer, members, description, interests, achievements, history);
+  }
+
+  if (loading || loading2) {
+    return <Spinner />
+  }
 
   return (
     <div className="p-10 py-20">
@@ -93,7 +131,7 @@ function EditProfile({ club }) {
                 <BiSolidPencil style={{ fontSize: 60 }} />
               </div>
             </div>
-            <button className=" bg-black hover:bg-[#01616c] text-white w-[40%] h-12 justify-items-end justify-end justify-self-end mt-auto rounded-md p-2">
+            <button onClick={onSubmit} className=" bg-black hover:bg-[#01616c] text-white w-[40%] h-12 justify-items-end justify-end justify-self-end mt-auto rounded-md p-2">
               <Link className="flex justify-center text-lg" to="/edit-club">
                 Submit
               </Link>
@@ -143,27 +181,18 @@ function EditProfile({ club }) {
                 placeholder="Members"
               />
             </div>
-
-            {/* Club Events */}
-            {/* <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Club Events</h2>
-              <div className="flex space-x-4">
-                <div>
-                  <div className="w-[250px] h-[250px]">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                    />
-                  </div>
-                  <p>
-                    <span>
-                      <textarea placeholder="event details"></textarea>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div> */}
+            <div className="mb-4">
+              {/* Club Members */}
+              <h2 className="text-xl font-bold mb-5">Club Interests</h2>
+              <textarea
+                cols={50}
+                rows={2}
+                value={clubInterests}
+                onChange={e => setClubInterests(e.target.value)}
+                className="border border-gray-300 p-2 ml-5"
+                placeholder="Interests"
+              />
+            </div>
 
             <div className="mb-4">
               {/* Club Achievements */}
@@ -179,7 +208,9 @@ function EditProfile({ club }) {
 }
 
 const mapStateToProps = state => ({
-  club: state.club.club
+  user: state.auth.user,
+  club: state.club.club,
+  loading: state.club.loading
 })
 
-export default connect(mapStateToProps)(EditProfile)
+export default connect(mapStateToProps, { editClub, getClub })(EditProfile)

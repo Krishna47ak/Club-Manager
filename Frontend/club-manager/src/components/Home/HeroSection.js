@@ -22,7 +22,6 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--primary'
           buttonSize='btn--large'
-          onClick={() => console.log('hey')}
         >
           REGISTER YOUR CLUB <i className='far fa-play-circle' />
         </Button>

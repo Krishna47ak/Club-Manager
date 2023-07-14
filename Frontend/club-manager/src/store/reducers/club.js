@@ -1,4 +1,4 @@
-import { FETCH_CLUBS, GET_CLUB } from "../types"
+import { FETCH_CLUBS, GET_CLUB, EDIT_CLUB } from "../types"
 
 const initialState = {
     club: null,
@@ -16,6 +16,7 @@ export default function (state = initialState, action) {
                 loading: false,
                 clubs: payload
             }
+        case EDIT_CLUB:
         case GET_CLUB:
             return {
                 ...state,

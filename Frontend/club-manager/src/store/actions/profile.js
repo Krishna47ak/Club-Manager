@@ -10,13 +10,13 @@ export const editProfile = (img, name, mobile, usn, collegename, gender, course,
         }
     }
 
-    const body = JSON.stringify({ img, name, mobile, gender, usn, collegename, sem, course, dob, })
+    const body = JSON.stringify({ img, name, mobile, gender, usn, collegename, sem, course, dob })
     try {
         const response = await clubApi.post('/api/profile/', body, config)
         dispatch({ type: FETCH_USER, payload: response?.data })
         history('/profile')
     } catch (err) {
         const errors = err?.response?.data?.errors
-        console.log(err);
+        console.log(errors);
     }
 }

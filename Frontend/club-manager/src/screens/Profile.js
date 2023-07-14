@@ -103,8 +103,8 @@ function Profile({ isAuthenticated, user, fetchUser }) {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(mapStateToProps, { fetchUser })(Profile);
