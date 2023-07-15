@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Main.css';
 import './HeroSection.css';
+import '../common/Button.css'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 

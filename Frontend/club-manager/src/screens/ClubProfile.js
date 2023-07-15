@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getClub } from '../store/actions/club'
-import { BiSolidPencil } from "react-icons/bi";
+import { BiSolidPencil, BiSolidUser } from "react-icons/bi";
 
 import default_logo from '../assets/images/club_logo_default.png'
 import default_cover from '../assets/images/cover_image_default.png'
@@ -17,7 +17,20 @@ function ClubProfile({ club, user, loading, loading2, getClub }) {
     return <Spinner />
   }
 
-  return (
+  return (club === null ? (
+    <div className='h-screen p-16 px-20' >
+      <p className='text-teal-500 font-bold text-4xl' >Club Dashboard</p>
+      <div className='flex mt-7' >
+        <BiSolidUser style={{ fontSize: 30, marginRight: 10 }} />
+        <p className='text-blue-500 font-bold text-2xl' >Welcome {user?.name}</p>
+      </div>
+      <p className='text-black text-lg mt-3 ml-1 mb-10' >You have not yet setup a club, please add some info</p>
+      <Link to='/edit-club' >
+        <button className='bg-[#1e848f] text-white p-3 px-5 rounded-lg' >Create Club</button>
+      </Link>
+    </div>
+  ) : (
+
     <div className="mx-auto px-14 my-5">
       <Link className="absolute top-32 bg-black hover:bg-[#01616c] text-white w-[10%] h-[40px] rounded-md p-2" to="/edit-club">
         <button className="flex">
@@ -89,6 +102,7 @@ function ClubProfile({ club, user, loading, loading2, getClub }) {
         </div>
       </div>
     </div>
+  )
   )
 }
 

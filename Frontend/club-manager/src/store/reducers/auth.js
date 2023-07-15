@@ -27,13 +27,21 @@ export default function (state = initialState, action) {
                 user: payload
             }
         case AUTH_ERROR:
-        case SIGN_OUT:
             localStorage.removeItem('token')
             return {
                 ...state,
                 token: null,
                 isAuthenticated: null,
                 loading: false,
+                user: null
+            }
+        case SIGN_OUT:
+            localStorage.removeItem('token')
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: null,
+                loading: true,
                 user: null
             }
         default:

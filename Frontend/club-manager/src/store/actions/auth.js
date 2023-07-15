@@ -1,5 +1,5 @@
 import clubApi from '../../api/clubApi'
-import { AUTH_ERROR, FETCH_USER, LOGIN_SUCCESS, SIGN_OUT } from '../types'
+import { AUTH_ERROR, CLUB_OUT, FETCH_USER, LOGIN_SUCCESS, SIGN_OUT } from '../types'
 
 
 export const fetchUser = () => async dispatch => {
@@ -21,6 +21,7 @@ export const fetchUser = () => async dispatch => {
 }
 export const signout = () => async dispatch => {
     dispatch({ type: SIGN_OUT })
+    dispatch({ type: CLUB_OUT })
 }
 
 export const login = (email, password, history) => async dispatch => {
@@ -38,7 +39,7 @@ export const login = (email, password, history) => async dispatch => {
         history('/profile')
     } catch (err) {
         const errors = err?.response?.data?.error
-        console.log(errors);
+        console.error(errors);
     }
 }
 
