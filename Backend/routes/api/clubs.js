@@ -23,11 +23,11 @@ router.post('/', auth, [
         let adminClub = await Club.findOne({ user })
 
         if (admin.role == 'student') {
-            return res.status(400).json({ errors: [{ msg: 'You have to be a admin' }] })
+            return res.status(400).json({ errors: 'You have to be a admin' })
         }
 
         if (adminClub) {
-            return res.status(400).json({ errors: [{ msg: 'User already has a club' }] })
+            return res.status(400).json({ errors: 'User already has a club' })
         }
 
         const interests = req.body.interests.split(',').map(interest => interest.trim())
@@ -119,13 +119,13 @@ router.get('/:id', auth, async (req, res) => {
         const user = req.params.id
         let club = await Club.findOne({ user })
         if (!club) {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
         res.json(club)
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
         res.status(500).send('Server Error')
     }
@@ -136,12 +136,12 @@ router.delete('/:id', auth, async (req, res) => {
     try {
         const club = await Club.findById(req.params.id)
         if (!club) {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
 
         // Check user
         if (club.user.toString() !== req.user.id) {
-            return res.status(401).json({ msg: "User not authorized" })
+            return res.status(401).json({ errors: "User not authorized" })
         }
 
         await club.remove()
@@ -149,7 +149,7 @@ router.delete('/:id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
         res.status(500).send('Server Error')
     }
@@ -160,12 +160,12 @@ router.put('/like/:id', auth, async (req, res) => {
     try {
         const club = await Club.findById(req.params.id)
         if (!club) {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
 
         // Check if the club has already been liked
         if (club.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
-            return res.status(400).json({ msg: 'Club already liked' })
+            return res.status(400).json({ errors: 'Club already liked' })
         }
 
         club.likes.unshift({ user: req.user.id })
@@ -175,7 +175,7 @@ router.put('/like/:id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
         res.status(500).send('Server Error')
     }
@@ -186,12 +186,12 @@ router.put('/unlike/:id', auth, async (req, res) => {
     try {
         const club = await Club.findById(req.params.id)
         if (!club) {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
 
         // Check if the club has not yet been liked
         if (club.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
-            return res.status(400).json({ msg: 'Club has not yet been liked' })
+            return res.status(400).json({ errors: 'Club has not yet been liked' })
         }
 
         const removeIndex = club.likes.map(like => like.user.toString()).indexOf(req.user.id)
@@ -202,7 +202,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
     } catch (err) {
         console.error(err.message);
         if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: "Club not found" })
+            return res.status(404).json({ errors: "Club not found" })
         }
         res.status(500).send('Server Error')
     }
