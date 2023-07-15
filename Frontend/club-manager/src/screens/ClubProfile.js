@@ -76,7 +76,7 @@ function ClubProfile({ club, user, loading, loading2, getClub }) {
             </div>
           )}
           {/* Club Achievements */}
-          {club?.achievements[0].length > 0 && (
+          {club?.achievements[0]?.length > 0 && (
             <div className="mb-4">
               <h2 className="text-xl font-bold mb-2">Club Achievements</h2>
               <ul className="flex flex-wrap w-[25rem]">

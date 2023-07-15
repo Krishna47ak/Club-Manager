@@ -74,7 +74,6 @@ function EditProfile({ club, user, loading, editClub, getClub }) {
   const handleImageClick2 = () => {
     inputRef2.current.click();
   };
-  console.log(clubInterests);
 
   const onSubmit = e => {
     e.preventDefault()

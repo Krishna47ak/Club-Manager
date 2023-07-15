@@ -6,15 +6,16 @@ import Moment from 'react-moment'
 import { BiSolidPencil, BiSearch } from "react-icons/bi";
 
 import { fetchUser } from "../store/actions/auth";
+import Spinner from "../components/Spinner/Spinner";
 
-function Profile({ isAuthenticated, user, fetchUser }) {
+function Profile({ loading, user, fetchUser }) {
 
   useEffect(() => {
     fetchUser();
   }, []);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/sign-in" />;
+  if (loading || !user) {
+    return <Spinner/>
   }
 
   return (
@@ -82,7 +83,7 @@ function Profile({ isAuthenticated, user, fetchUser }) {
               </div>
               <div>
                 <p className="font-medium text-3xl">Semester</p>
-                <p>&nbsp;{user?.sem || ''}{user?.sem==1?'st':user?.sem==2?'nd':user?.sem==3?'rd':'th'}</p>
+                <p>&nbsp;{user?.sem || ''}{user?.sem == 1 ? 'st' : user?.sem == 2 ? 'nd' : user?.sem == 3 ? 'rd' : 'th'}</p>
               </div>
               <div>
                 <p className="font-medium text-3xl">Date Of Birth</p>
@@ -104,7 +105,7 @@ function Profile({ isAuthenticated, user, fetchUser }) {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  isAuthenticated: state.auth.isAuthenticated
+  loading: state.auth.loading
 });
 
 export default connect(mapStateToProps, { fetchUser })(Profile);

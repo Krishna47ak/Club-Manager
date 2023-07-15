@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signout } from '../../store/actions/auth'
+import { GiHamburgerMenu } from 'react-icons/gi'
 
-import Button from '../common/Button'
+import { signout } from '../../store/actions/auth'
 import './Navbar.css'
 
 
@@ -32,6 +32,7 @@ function Navbar({ isAuthenticated, signout, user }) {
                 <div className='navbar-container'>
                     <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>ClubManager <i className="fab fa-typo3"></i></Link>
                     <div className='menu-icon' onClick={handleClick}>
+                        <GiHamburgerMenu style={{ color: 'white' }} />
                         <i className={click ? "fas fa-times" : "fas fa-bars"} />
                     </div>
                     <ul className={click ? "nav-menu active" : "nav-menu"}>
@@ -49,7 +50,10 @@ function Navbar({ isAuthenticated, signout, user }) {
                             </>
                         )}
                     </ul>
-                    {button && <Button isAuthenticated={isAuthenticated} onClick={isAuthenticated && signout} buttonStyle="btn--outline">{isAuthenticated ? 'Sign Out' : 'Sign Up'}</Button>}
+                    {button &&
+                        <Link to={`${ isAuthenticated ? '/sign-in' : '/sign-up' }`}className='btn-mobile'>
+                            <button className={`text-white text-xl font-thin border py-2 px-5 ${isAuthenticated ? 'border-red-500' : 'border-white'}`} onClick={isAuthenticated && signout} >{isAuthenticated ? 'Sign Out' : 'Sign Up'}</button>
+                        </Link>}
                 </div>
             </nav >
         </>

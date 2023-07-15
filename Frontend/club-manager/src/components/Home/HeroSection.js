@@ -1,9 +1,10 @@
 import React from 'react';
 import '../Main.css';
-import  Button  from '../common/Button';
 import './HeroSection.css';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function HeroSection() {
+function HeroSection({ isAuthenticated }) {
   return (
     <div className='hero-container'>
       {/* <video src='/videos/video-1.mp4' autoPlay loop muted /> */}
@@ -11,23 +12,25 @@ function HeroSection() {
       <h1>ClubManager</h1>
       <p>Discover and Connect with College Clubs in a Snap!</p>
       <div className='hero-btns'>
-        <Button
-          className='btns'
-          buttonStyle='btn--outline'
-          buttonSize='btn--large'
-        >
+        <Link to="/profile" >
+        <button className='btn btns btn--outline btn--large' >
           GET STARTED
-        </Button>
-        <Button
-          className='btns'
-          buttonStyle='btn--primary'
-          buttonSize='btn--large'
-        >
-          REGISTER YOUR CLUB <i className='far fa-play-circle' />
-        </Button>
+        </button>
+        </Link>
+        {!isAuthenticated && (
+          <Link to="/sign-up" >
+            <button className='btn btns btn--primary btn--large' >
+              REGISTER YOUR CLUB <i className='far fa-play-circle' />
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );
 }
 
-export default HeroSection;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps)(HeroSection)

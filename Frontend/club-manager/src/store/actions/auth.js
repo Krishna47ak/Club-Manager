@@ -14,7 +14,7 @@ export const fetchUser = () => async dispatch => {
         const response = await clubApi.get('/api/auth/', config)
         dispatch({ type: FETCH_USER, payload: response?.data })
     } catch (err) {
-        // dispatch({ type: AUTH_ERROR })
+        dispatch({ type: AUTH_ERROR })
         const errors = err?.response?.data?.errors
         console.error(errors);
     }
