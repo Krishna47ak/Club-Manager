@@ -19,6 +19,7 @@ app.use(express.json({ extended: false }))
 app.use('/api/auth', require('./routes/api/auth'))
 app.use('/api/clubs', require('./routes/api/clubs'))
 app.use('/api/profile', require('./routes/api/profile'))
+app.use('/api/events', require('./routes/api/events'))
 
 app.get('/', (req, res) => res.send('Api Running'))
 
