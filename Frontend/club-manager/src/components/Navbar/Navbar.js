@@ -38,11 +38,12 @@ function Navbar({ isAuthenticated, signout, user }) {
                     <ul className={click ? "nav-menu active" : "nav-menu"}>
 
                         <li className='nav-item'><Link to="/" className='nav-links' onClick={closeMobileMenu}>Home</Link></li>
-                        <li className='nav-item'><Link to="/search" className='nav-links' onClick={closeMobileMenu}>Search</Link></li>
+                        <li className='nav-item'><Link to="/search" className='nav-links' onClick={closeMobileMenu}>Clubs</Link></li>
                         {!isAuthenticated ? (
                             <li className='nav-item'><Link to="/sign-in" className='nav-links' onClick={closeMobileMenu}>Sign In</Link></li>
                         ) : (
                             <>
+                                <li className='nav-item'><Link to="/events" className='nav-links' onClick={closeMobileMenu}>Events</Link></li>
                                 {user?.role == 'admin' && (
                                     <li className='nav-item'><Link to="/club-profile" className='nav-links' onClick={closeMobileMenu}>Club</Link></li>
                                 )}
@@ -51,7 +52,7 @@ function Navbar({ isAuthenticated, signout, user }) {
                         )}
                     </ul>
                     {button &&
-                        <Link to={`${ isAuthenticated ? '/sign-in' : '/sign-up' }`}className='btn-mobile'>
+                        <Link to={`${isAuthenticated ? '/sign-in' : '/sign-up'}`} className='btn-mobile'>
                             <button className={`text-white text-xl font-thin border py-2 px-5 ${isAuthenticated ? 'border-red-500' : 'border-white'}`} onClick={isAuthenticated && signout} >{isAuthenticated ? 'Sign Out' : 'Sign Up'}</button>
                         </Link>}
                 </div>
